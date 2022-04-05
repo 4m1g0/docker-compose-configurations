@@ -1,0 +1,25 @@
+version: "3.7"
+
+services:
+  caddy:
+    container_name: caddy
+    image: caddy:latest
+    restart: unless-stopped
+    user: 1000:1000
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - TZ=Europe/Madrid
+    volumes:
+      - ./caddyFile:/etc/caddy/
+      - ./site:/srv
+      - ./data:/data
+      - ./config:/config
+      - ./log:/log
+    networks:
+      - web
+
+networks:
+  web:
+    name: web

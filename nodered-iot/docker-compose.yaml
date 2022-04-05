@@ -1,0 +1,64 @@
+version: "3.7"
+
+services:
+  node-red:
+    container_name: nodered-iot
+    image: nodered/node-red:latest
+    restart: unless-stopped
+    user: root
+    environment:
+      - TZ=Europe/Amsterdam
+    networks:
+      - web
+      - internal
+    volumes:
+      - ./data:/data
+
+  mongo:
+    image: mongo
+    container_name: mongo-iot
+    restart: unless-stopped
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+    volumes:
+      - ./mongodb/data:/data/db
+      - ./mongodb/mongod.conf:/etc/mongod.conf
+      - ./mongodb/logs:/var/log/mongodb
+    networks:
+      - internal
+
+  mongoexpress:
+    image: mongo-express
+    container_name: mongoexpress
+    restart: unless-stopped
+    depends_on:
+      - mongo
+    env_file: 
+      - .env
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=${MONGO_USERNAME}
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=${MONGO_PASSWORD}
+    networks:
+      - web
+      - internal
+
+  influxdb:
+    image: influxdb
+    container_name: influxdb
+    restart: unless-stopped
+    #ports:
+    #  - 8086:8086
+    #  - 8088:8088
+    volumes:
+      - ./influxdb/data:/var/lib/influxdb2
+      - ./influxdb/conf:/etc/influxdb2
+    networks:
+      - web # admin panel
+      - internal
+    
+networks:
+  web:
+    external: true
+  internal:
+    driver: bridge

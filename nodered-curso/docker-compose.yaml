@@ -1,0 +1,212 @@
+version: "3.7"
+services:
+  node-red1:
+    container_name: nodered-curso1
+    image: nodered/node-red:latest
+    restart: unless-stopped
+    user: root
+    environment:
+      - TZ=Europe/Amsterdam
+    networks:
+      - web
+      - internal
+    volumes:
+      - ./data1:/data
+  
+  node-red2:
+    container_name: nodered-curso2
+    image: nodered/node-red:latest
+    restart: unless-stopped
+    user: root
+    environment:
+      - TZ=Europe/Amsterdam
+    networks:
+      - web
+      - internal
+    volumes:
+      - ./data2:/data
+  
+  node-red3:
+    container_name: nodered-curso3
+    image: nodered/node-red:latest
+    restart: unless-stopped
+    user: root
+    environment:
+      - TZ=Europe/Amsterdam
+    networks:
+      - web
+      - internal
+    volumes:
+      - ./data3:/data
+        
+  node-red4:
+    container_name: nodered-curso4
+    image: nodered/node-red:latest
+    restart: unless-stopped
+    user: root
+    environment:
+      - TZ=Europe/Amsterdam
+    networks:
+      - web
+      - internal
+    volumes:
+      - ./data4:/data
+        
+  node-red5:
+    container_name: nodered-curso5
+    image: nodered/node-red:latest
+    restart: unless-stopped
+    user: root
+    environment:
+      - TZ=Europe/Amsterdam
+    networks:
+      - web
+      - internal
+    volumes:
+      - ./data5:/data
+        
+  node-red6:
+    container_name: nodered-curso6
+    image: nodered/node-red:latest
+    restart: unless-stopped
+    user: root
+    environment:
+      - TZ=Europe/Amsterdam
+    networks:
+      - web
+      - internal
+    volumes:
+      - ./data6:/data
+        
+  node-red7:
+    container_name: nodered-curso7
+    image: nodered/node-red:latest
+    restart: unless-stopped
+    user: root
+    environment:
+      - TZ=Europe/Amsterdam
+    networks:
+      - web
+      - internal
+    volumes:
+      - ./data7:/data
+        
+  node-red8:
+    container_name: nodered-curso8
+    image: nodered/node-red:latest
+    restart: unless-stopped
+    user: root
+    environment:
+      - TZ=Europe/Amsterdam
+    networks:
+      - web
+      - internal
+    volumes:
+      - ./data8:/data
+        
+  node-red9:
+    container_name: nodered-curso9
+    image: nodered/node-red:latest
+    restart: unless-stopped
+    user: root
+    environment:
+      - TZ=Europe/Amsterdam
+    networks:
+      - web
+      - internal
+    volumes:
+      - ./data9:/data
+        
+  node-red10:
+    container_name: nodered-curso10
+    image: nodered/node-red:latest
+    restart: unless-stopped
+    user: root
+    environment:
+      - TZ=Europe/Amsterdam
+    networks:
+      - web
+      - internal
+    volumes:
+      - ./data10:/data
+        
+  node-red11:
+    container_name: nodered-curso11
+    image: nodered/node-red:latest
+    restart: unless-stopped
+    user: root
+    environment:
+      - TZ=Europe/Amsterdam
+    networks:
+      - web
+      - internal
+    volumes:
+      - ./data11:/data
+        
+  node-red12:
+    container_name: nodered-curso12
+    image: nodered/node-red:latest
+    restart: unless-stopped
+    user: root
+    environment:
+      - TZ=Europe/Amsterdam
+    networks:
+      - web
+      - internal
+    volumes:
+      - ./data12:/data
+        
+  node-red13:
+    container_name: nodered-curso13
+    image: nodered/node-red:latest
+    restart: unless-stopped
+    user: root
+    environment:
+      - TZ=Europe/Amsterdam
+    networks:
+      - web
+      - internal
+    volumes:
+      - ./data13:/data
+        
+  node-red14:
+    container_name: nodered-curso14
+    image: nodered/node-red:latest
+    restart: unless-stopped
+    user: root
+    environment:
+      - TZ=Europe/Amsterdam
+    networks:
+      - web
+      - internal
+    volumes:
+      - ./data14:/data 
+             
+  node-red15:
+    container_name: nodered-curso15
+    image: nodered/node-red:latest
+    restart: unless-stopped
+    user: root
+    environment:
+      - TZ=Europe/Amsterdam
+    networks:
+      - web
+      - internal
+    volumes:
+      - ./data15:/data
+  mongo:
+    image: mongo
+    container_name: mongo-curso
+    restart: unless-stopped
+    volumes:
+      - ./mongodb/data:/data/db
+      - ./mongodb/mongod.conf:/etc/mongod.conf
+      - ./mongodb/logs:/var/log/mongodb
+    networks:
+      - internal
+
+networks:
+  web:
+    external: true
+  internal:
+    driver: bridge
