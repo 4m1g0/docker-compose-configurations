@@ -1,0 +1,13 @@
+nsf:
+    image: erichough/nfs-server
+    container_name: nfs
+    restart: unless-stopped
+    cap_add:
+        - SYS_ADMIN
+    security_opt:
+        - apparmor=erichough-nfs
+    volumes:
+        - /mnt/data/:/exported/data
+        - ./config/exports:/etc/exports:ro
+    ports:
+        - "2049:2049"
