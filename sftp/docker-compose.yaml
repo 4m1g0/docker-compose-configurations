@@ -1,0 +1,10 @@
+sftp:
+    image: atmoz/sftp
+    container_name: sftp
+    restart: unless-stopped
+    volumes:
+        - /mnt/data/shared:/home
+        - ./users/users.conf:/etc/sftp/users.conf:ro
+        - ./config:/etc/ssh/
+    ports:
+        - "2222:22"

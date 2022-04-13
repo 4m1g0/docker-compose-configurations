@@ -1,0 +1,3 @@
+Subsystem sftp internal-sftp
+Match Group users
+    ForceCommand internal-sftp -d ~/uploads
