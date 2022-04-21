@@ -10,4 +10,11 @@ nsf:
         - /mnt/data/:/exported/data
         - ./config/exports:/etc/exports:ro
     ports:
+        - "111:111"
+        - "111:111/udp"
+        - "32765:32765"
+        - "32765:32765/udp"
+        - "32767:32767"
+        - "32767:32767/udp"
         - "2049:2049"
+        - "2049:2049/udp"
