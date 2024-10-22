@@ -5,18 +5,22 @@ services:
     container_name: caddy
     image: caddy:latest
     restart: unless-stopped
-    user: 1000:1000
+    #user: 1000:1000
     ports:
       - "80:80"
       - "443:443"
     environment:
       - TZ=Europe/Madrid
+    env_file:
+      - .env
     volumes:
+      - ./start_scripts:/usr/bin/start_scripts
       - ./caddyFile:/etc/caddy/
       - ./site:/srv
       - ./data:/data
       - ./config:/config
       - ./log:/log
+    command: sh /usr/bin/start_scripts/start-caddy.sh
     networks:
       - web
 
