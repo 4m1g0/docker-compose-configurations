@@ -1,0 +1,29 @@
+services:
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    user: 1000:1000
+    restart: unless-stopped
+    command: [--auth]
+    environment:
+      - MONGO_INITDB_DATABASE=${MONGO_INITDB_DATABASE}
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+      - MONGO_INITDB_USER=${MONGO_INITDB_USER}
+      - MONGO_INITDB_PASSWORD=${MONGO_INITDB_PASSWORD}
+    volumes:
+      - ./data:/data/db
+      - ./init.sh:/docker-entrypoint-initdb.d/init.sh:ro
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongoexpress
+    restart: unless-stopped
+    ports:
+      - 8081:8081
+    environment:
+      - ME_CONFIG_MONGODB_URL=${ME_CONFIG_MONGODB_URL}
+      - ME_CONFIG_BASICAUTH=${ME_CONFIG_BASICAUTH}
+      - ME_CONFIG_BASICAUTH_USERNAME=${ME_CONFIG_BASICAUTH_USERNAME}
+      - ME_CONFIG_BASICAUTH_PASSWORD=${ME_CONFIG_BASICAUTH_PASSWORD}
