@@ -1,0 +1,47 @@
+services:
+  registry:
+    image: registry:latest
+    container_name: registry
+    restart: unless-stopped
+    user: 1001:114
+    #ports:
+    #- "5000:5000"
+    environment:
+      REGISTRY_AUTH: htpasswd
+      REGISTRY_AUTH_HTPASSWD_REALM: Registry
+      REGISTRY_AUTH_HTPASSWD_PATH: /auth/registry.password
+      REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /data
+      REGISTRY_STORAGE_DELETE_ENABLED: 'true'
+      REGISTRY_STORAGE_MAINTENANCE_READONLY: "{\"enabled\": ${READONLY:-false}}"
+    volumes:
+      - ./auth:/auth
+      - ./data:/data
+    networks:
+      - web
+
+  registry-ui:
+    image: joxit/docker-registry-ui:main
+    restart: always
+    user: nginx # when running as user port is 8080
+      #ports:
+      #- 80:80
+    environment:
+      #- REGISTRY_URL=http://registry
+      - SINGLE_REGISTRY=true
+      - REGISTRY_TITLE=Docker Registry UI
+      - DELETE_IMAGES=true
+      - SHOW_CONTENT_DIGEST=true
+      - NGINX_PROXY_PASS_URL=http://registry:5000
+      - SHOW_CATALOG_NB_TAGS=true
+      - CATALOG_MIN_BRANCHES=1
+      - CATALOG_MAX_BRANCHES=1
+      - TAGLIST_PAGE_SIZE=100
+      - REGISTRY_SECURED=true
+      - CATALOG_ELEMENTS_LIMIT=1000
+    container_name: registry-ui
+    networks:
+      - web
+
+networks:
+  web:
+    external: true
