@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ "$(whoami)" != "root" ]; then
+    echo "You must be root to do this"
+    exit
+fi
+
 # List of users and their public SSH keys
 declare -A USERS
 USERS=(
@@ -16,24 +21,24 @@ create_user() {
         echo "User $USERNAME already exists. Continuing..."
     else
         echo "Creating user $USERNAME..."
-        sudo useradd -m -s /bin/bash "$USERNAME"
+        useradd -m -s /bin/bash "$USERNAME"
     fi
 
     # Add user to group sudo
-    sudo usermod -aG sudo "$USERNAME"
+    usermod -aG sudo "$USERNAME"
 
     # Create .ssh directory if it doesn't exist
-    sudo mkdir -p /home/"$USERNAME"/.ssh
+    mkdir -p /home/"$USERNAME"/.ssh
 
     # Set permissions for .ssh directory
-    sudo chmod 700 /home/"$USERNAME"/.ssh
+    chmod 700 /home/"$USERNAME"/.ssh
 
     # Add the public key to the authorized_keys file
     echo "$SSH_KEY" | sudo tee /home/"$USERNAME"/.ssh/authorized_keys > /dev/null
 
     # Set permissions for the authorized_keys file
-    sudo chmod 600 /home/"$USERNAME"/.ssh/authorized_keys
-    sudo chown -R "$USERNAME":"$USERNAME" /home/"$USERNAME"/.ssh
+    chmod 600 /home/"$USERNAME"/.ssh/authorized_keys
+    chown -R "$USERNAME":"$USERNAME" /home/"$USERNAME"/.ssh
 
     echo "User $USERNAME created and configured for SSH access."
 }
