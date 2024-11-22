@@ -1,0 +1,2 @@
+To disable new user signup set data/config.json signups_allowed -> false
+The data/config.json is only created the first time when we set the ADMIN_TOKEN env variable, however to disable the admin panel we should remove that variable from env, and also from config.json once it was created.
