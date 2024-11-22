@@ -1,0 +1,17 @@
+services:
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    restart: unless-stopped
+    user: 1001:114
+    environment:
+      DOMAIN: "https://example.com"
+        #ADMIN_TOKEN: my_token
+    volumes:
+      - ./vw-data/:/data/
+    networks:
+      - web
+
+networks:
+  web:
+    external: true
